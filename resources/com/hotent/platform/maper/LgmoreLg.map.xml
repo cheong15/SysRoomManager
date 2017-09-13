@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.hotent.demo.model.LigerUI.LgmoreLg">
+	<resultMap id="LgmoreLg" type="com.hotent.demo.model.LigerUI.LgmoreLg">
+		<id property="id" column="ID" jdbcType="NUMERIC"/>
+		<result property="name" column="F_NAME" jdbcType="VARCHAR"/>
+		<result property="sex" column="F_SEX" jdbcType="VARCHAR"/>
+		<result property="birthday" column="F_BIRTHDAY" jdbcType="DATE"/>
+		<result property="money" column="F_MONEY" jdbcType="NUMERIC"/>
+		<result property="toWife" column="F_TOWIFE" jdbcType="NUMERIC"/>
+		<result property="joinDate" column="F_JOINDATE" jdbcType="DATE"/>
+		<result property="jiehunDay" column="F_JIEHUNDAY" jdbcType="DATE"/>
+		<result property="jobType" column="F_JOBTYPE" jdbcType="VARCHAR"/>
+		<result property="comment" column="F_COMMENT" jdbcType="CLOB"/>
+		<result property="selectUser" column="F_SELECTUSER" jdbcType="VARCHAR"/>
+		<result property="selectUserID" column="F_SELECTUSERID" jdbcType="VARCHAR"/>
+		<result property="selectOrg" column="F_SELECTORG" jdbcType="VARCHAR"/>
+		<result property="selectOrgID" column="F_SELECTORGID" jdbcType="VARCHAR"/>
+		<result property="selectRole" column="F_SELECTROLE" jdbcType="VARCHAR"/>
+		<result property="selectRoleID" column="F_SELECTROLEID" jdbcType="VARCHAR"/>
+		<result property="selectJob" column="F_SELECTJOB" jdbcType="VARCHAR"/>
+		<result property="selectJobID" column="F_SELECTJOBID" jdbcType="VARCHAR"/>
+		<result property="selectOpinion" column="F_SELECTOPINION" jdbcType="VARCHAR"/>
+		<result property="picSelect" column="F_PICSELECT" jdbcType="VARCHAR"/>
+		<result property="fileUpload" column="F_FILEUPLOAD" jdbcType="VARCHAR"/>
+	</resultMap>
+
+	<sql id="columns">
+		ID,F_NAME,F_SEX,F_BIRTHDAY,F_MONEY,F_TOWIFE,F_JOINDATE,F_JIEHUNDAY,F_JOBTYPE,F_COMMENT,F_SELECTUSER,F_SELECTUSERID,F_SELECTORG,F_SELECTORGID,F_SELECTROLE,F_SELECTROLEID,F_SELECTJOB,F_SELECTJOBID,F_SELECTOPINION,F_PICSELECT,F_FILEUPLOAD
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<if test="@Ognl@isNotEmpty(name)"> AND F_NAME  LIKE '%${name}%'  </if>
+			<if test="@Ognl@isNotEmpty(sex)"> AND F_SEX  LIKE '%${sex}%'  </if>
+			<if test="@Ognl@isNotEmpty(birthday)"> AND F_BIRTHDAY  =#{birthday} </if>
+			<if test="@Ognl@isNotEmpty(beginbirthday)"> AND F_BIRTHDAY  >=#{beginbirthday,jdbcType=DATE} </if>
+			<if test="@Ognl@isNotEmpty(endbirthday)"> AND F_BIRTHDAY <![CDATA[ <=#{endbirthday,jdbcType=DATE}]]> </if>
+			<if test="@Ognl@isNotEmpty(money)"> AND F_MONEY  =#{money} </if>
+			<if test="@Ognl@isNotEmpty(toWife)"> AND F_TOWIFE  =#{toWife} </if>
+			<if test="@Ognl@isNotEmpty(joinDate)"> AND F_JOINDATE  =#{joinDate} </if>
+			<if test="@Ognl@isNotEmpty(beginjoinDate)"> AND F_JOINDATE  >=#{beginjoinDate,jdbcType=DATE} </if>
+			<if test="@Ognl@isNotEmpty(endjoinDate)"> AND F_JOINDATE <![CDATA[ <=#{endjoinDate,jdbcType=DATE}]]> </if>
+			<if test="@Ognl@isNotEmpty(jiehunDay)"> AND F_JIEHUNDAY  =#{jiehunDay} </if>
+			<if test="@Ognl@isNotEmpty(beginjiehunDay)"> AND F_JIEHUNDAY  >=#{beginjiehunDay,jdbcType=DATE} </if>
+			<if test="@Ognl@isNotEmpty(endjiehunDay)"> AND F_JIEHUNDAY <![CDATA[ <=#{endjiehunDay,jdbcType=DATE}]]> </if>
+			<if test="@Ognl@isNotEmpty(jobType)"> AND F_JOBTYPE  LIKE '%${jobType}%'  </if>
+			<if test="@Ognl@isNotEmpty(comment)"> AND F_COMMENT  =#{comment} </if>
+			<if test="@Ognl@isNotEmpty(selectUser)"> AND F_SELECTUSER  LIKE '%${selectUser}%'  </if>
+			<if test="@Ognl@isNotEmpty(selectUserID)"> AND F_SELECTUSERID  LIKE '%${selectUserID}%'  </if>
+			<if test="@Ognl@isNotEmpty(selectOrg)"> AND F_SELECTORG  LIKE '%${selectOrg}%'  </if>
+			<if test="@Ognl@isNotEmpty(selectOrgID)"> AND F_SELECTORGID  LIKE '%${selectOrgID}%'  </if>
+			<if test="@Ognl@isNotEmpty(selectRole)"> AND F_SELECTROLE  LIKE '%${selectRole}%'  </if>
+			<if test="@Ognl@isNotEmpty(selectRoleID)"> AND F_SELECTROLEID  LIKE '%${selectRoleID}%'  </if>
+			<if test="@Ognl@isNotEmpty(selectJob)"> AND F_SELECTJOB  LIKE '%${selectJob}%'  </if>
+			<if test="@Ognl@isNotEmpty(selectJobID)"> AND F_SELECTJOBID  LIKE '%${selectJobID}%'  </if>
+			<if test="@Ognl@isNotEmpty(selectOpinion)"> AND F_SELECTOPINION  LIKE '%${selectOpinion}%'  </if>
+			<if test="@Ognl@isNotEmpty(picSelect)"> AND F_PICSELECT  LIKE '%${picSelect}%'  </if>
+			<if test="@Ognl@isNotEmpty(fileUpload)"> AND F_FILEUPLOAD  LIKE '%${fileUpload}%'  </if>
+		</where>
+	</sql>
+
+	<insert id="add" parameterType="com.hotent.demo.model.LigerUI.LgmoreLg">
+		INSERT INTO W_LGMORE
+		(ID,
+		F_NAME,F_SEX,F_BIRTHDAY,F_MONEY,F_TOWIFE,F_JOINDATE,F_JIEHUNDAY,F_JOBTYPE,F_COMMENT,F_SELECTUSER,F_SELECTUSERID,F_SELECTORG,F_SELECTORGID,F_SELECTROLE,F_SELECTROLEID,F_SELECTJOB,F_SELECTJOBID,F_SELECTOPINION,F_PICSELECT,F_FILEUPLOAD)
+		VALUES
+		(#{id,jdbcType=NUMERIC},
+		#{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, #{money,jdbcType=NUMERIC}, #{toWife,jdbcType=NUMERIC}, #{joinDate,jdbcType=DATE}, #{jiehunDay,jdbcType=DATE}, #{jobType,jdbcType=VARCHAR}, #{comment,jdbcType=CLOB}, #{selectUser,jdbcType=VARCHAR}, #{selectUserID,jdbcType=VARCHAR}, #{selectOrg,jdbcType=VARCHAR}, #{selectOrgID,jdbcType=VARCHAR}, #{selectRole,jdbcType=VARCHAR}, #{selectRoleID,jdbcType=VARCHAR}, #{selectJob,jdbcType=VARCHAR}, #{selectJobID,jdbcType=VARCHAR}, #{selectOpinion,jdbcType=VARCHAR}, #{picSelect,jdbcType=VARCHAR}, #{fileUpload,jdbcType=VARCHAR})
+	</insert>
+	
+	<delete id="delById" parameterType="java.lang.Long">
+		DELETE FROM W_LGMORE 
+		WHERE
+		ID=#{id}
+	</delete>
+	
+	<update id="update" parameterType="com.hotent.demo.model.LigerUI.LgmoreLg">
+		UPDATE W_LGMORE SET
+		F_NAME=#{name,jdbcType=VARCHAR},
+		F_SEX=#{sex,jdbcType=VARCHAR},
+		F_BIRTHDAY=#{birthday,jdbcType=DATE},
+		F_MONEY=#{money,jdbcType=NUMERIC},
+		F_TOWIFE=#{toWife,jdbcType=NUMERIC},
+		F_JOINDATE=#{joinDate,jdbcType=DATE},
+		F_JIEHUNDAY=#{jiehunDay,jdbcType=DATE},
+		F_JOBTYPE=#{jobType,jdbcType=VARCHAR},
+		F_COMMENT=#{comment,jdbcType=CLOB},
+		F_SELECTUSER=#{selectUser,jdbcType=VARCHAR},
+		F_SELECTUSERID=#{selectUserID,jdbcType=VARCHAR},
+		F_SELECTORG=#{selectOrg,jdbcType=VARCHAR},
+		F_SELECTORGID=#{selectOrgID,jdbcType=VARCHAR},
+		F_SELECTROLE=#{selectRole,jdbcType=VARCHAR},
+		F_SELECTROLEID=#{selectRoleID,jdbcType=VARCHAR},
+		F_SELECTJOB=#{selectJob,jdbcType=VARCHAR},
+		F_SELECTJOBID=#{selectJobID,jdbcType=VARCHAR},
+		F_SELECTOPINION=#{selectOpinion,jdbcType=VARCHAR},
+		F_PICSELECT=#{picSelect,jdbcType=VARCHAR},
+		F_FILEUPLOAD=#{fileUpload,jdbcType=VARCHAR}
+		WHERE
+		ID=#{id}
+	</update>
+	
+		    
+	<select id="getById" parameterType="java.lang.Long" resultMap="LgmoreLg">
+		SELECT <include refid="columns"/>
+		FROM W_LGMORE
+		WHERE
+		ID=#{id}
+	</select>
+	
+	<select id="getAll" resultMap="LgmoreLg">
+		SELECT <include refid="columns"/>
+		FROM W_LGMORE   
+		<include refid="dynamicWhere" />
+		<if test="@Ognl@isNotEmpty(orderField)">
+		order by ${orderField} ${orderSeq}
+		</if>
+		<if test="@Ognl@isEmpty(orderField)">
+		order by ID  desc
+		</if>
+	</select>
+</mapper>

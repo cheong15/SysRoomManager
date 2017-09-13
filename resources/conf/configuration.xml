@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+PUBLIC "-//ibatis.apache.org//DTD Config 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-config.dtd">
+<configuration>
+	<settings >
+		<setting name="cacheEnabled" value="false"/>
+	</settings>
+	<plugins>
+		<plugin interceptor="com.hotent.core.mybatis.OffsetLimitInterceptor">
+			<property name="oracle" value="com.hotent.core.mybatis.dialect.OracleDialect"/>
+			<property name="mssql" value="com.hotent.core.mybatis.dialect.SQLServer2005Dialect"/>
+			<property name="mysql" value="com.hotent.core.mybatis.dialect.MySQLDialect"/>
+			<property name="db2" value="com.hotent.core.mybatis.dialect.DB2Dialect"/>
+			<property name="h2" value="com.hotent.core.mybatis.dialect.H2Dialect"/>
+			<property name="dm" value="com.hotent.core.mybatis.dialect.DmDialect"/>	
+		</plugin>
+	</plugins>
+</configuration>

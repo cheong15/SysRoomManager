@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.hotent.demo.model.LigerUI.Lgeditors">
+	<resultMap id="Lgeditors" type="com.hotent.demo.model.LigerUI.Lgeditors">
+		<id property="id" column="ID" jdbcType="NUMERIC"/>
+		<result property="name" column="F_NAME" jdbcType="VARCHAR"/>
+		<result property="sex" column="F_SEX" jdbcType="VARCHAR"/>
+		<result property="birthday" column="F_BIRTHDAY" jdbcType="DATE"/>
+		<result property="money" column="F_MONEY" jdbcType="NUMERIC"/>
+		<result property="toWife" column="F_TOWIFE" jdbcType="NUMERIC"/>
+		<result property="joinDate" column="F_JOINDATE" jdbcType="DATE"/>
+		<result property="jiehunDay" column="F_JIEHUNDAY" jdbcType="DATE"/>
+		<result property="jobType" column="F_JOBTYPE" jdbcType="VARCHAR"/>
+		<result property="comment" column="F_COMMENT" jdbcType="CLOB"/>
+	</resultMap>
+
+	<sql id="columns">
+		ID,F_NAME,F_SEX,F_BIRTHDAY,F_MONEY,F_TOWIFE,F_JOINDATE,F_JIEHUNDAY,F_JOBTYPE,F_COMMENT
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+				<if test="@Ognl@isNotEmpty(name)"> AND F_NAME  LIKE '%${name}%'  </if>
+				<if test="@Ognl@isNotEmpty(sex)"> AND F_SEX  LIKE '%${sex}%'  </if>
+				<if test="@Ognl@isNotEmpty(birthday)"> AND F_BIRTHDAY  =#{birthday} </if>
+				<if test="@Ognl@isNotEmpty(beginbirthday)"> AND F_BIRTHDAY  >=#{beginbirthday,jdbcType=DATE} </if>
+				<if test="@Ognl@isNotEmpty(endbirthday)"> AND F_BIRTHDAY <![CDATA[ <=#{endbirthday,jdbcType=DATE}]]> </if>
+				<if test="@Ognl@isNotEmpty(money)"> AND F_MONEY  =#{money} </if>
+				<if test="@Ognl@isNotEmpty(toWife)"> AND F_TOWIFE  =#{toWife} </if>
+				<if test="@Ognl@isNotEmpty(joinDate)"> AND F_JOINDATE  =#{joinDate} </if>
+				<if test="@Ognl@isNotEmpty(beginjoinDate)"> AND F_JOINDATE  >=#{beginjoinDate,jdbcType=DATE} </if>
+				<if test="@Ognl@isNotEmpty(endjoinDate)"> AND F_JOINDATE <![CDATA[ <=#{endjoinDate,jdbcType=DATE}]]> </if>
+				<if test="@Ognl@isNotEmpty(jiehunDay)"> AND F_JIEHUNDAY  =#{jiehunDay} </if>
+				<if test="@Ognl@isNotEmpty(beginjiehunDay)"> AND F_JIEHUNDAY  >=#{beginjiehunDay,jdbcType=DATE} </if>
+				<if test="@Ognl@isNotEmpty(endjiehunDay)"> AND F_JIEHUNDAY <![CDATA[ <=#{endjiehunDay,jdbcType=DATE}]]> </if>
+				<if test="@Ognl@isNotEmpty(jobType)"> AND F_JOBTYPE  LIKE '%${jobType}%'  </if>
+				<if test="@Ognl@isNotEmpty(comment)"> AND F_COMMENT  =#{comment} </if>
+		</where>
+	</sql>
+
+	<insert id="add" parameterType="com.hotent.demo.model.LigerUI.Lgeditors">
+		INSERT INTO W_LGEDITORS
+			(ID,
+			F_NAME,F_SEX,F_BIRTHDAY,F_MONEY,F_TOWIFE,F_JOINDATE,F_JIEHUNDAY,F_JOBTYPE,F_COMMENT)
+			VALUES
+			(#{id,jdbcType=NUMERIC},
+			#{name,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, #{money,jdbcType=NUMERIC}, #{toWife,jdbcType=NUMERIC}, #{joinDate,jdbcType=DATE}, #{jiehunDay,jdbcType=DATE}, #{jobType,jdbcType=VARCHAR}, #{comment,jdbcType=CLOB})
+	</insert>
+	
+	<delete id="delById" parameterType="java.lang.Long">
+		DELETE FROM W_LGEDITORS 
+		WHERE
+		ID=#{id}
+	</delete>
+	
+	<update id="update" parameterType="com.hotent.demo.model.LigerUI.Lgeditors">
+		UPDATE W_LGEDITORS SET
+		F_NAME=#{name,jdbcType=VARCHAR},
+		F_SEX=#{sex,jdbcType=VARCHAR},
+		F_BIRTHDAY=#{birthday,jdbcType=DATE},
+		F_MONEY=#{money,jdbcType=NUMERIC},
+		F_TOWIFE=#{toWife,jdbcType=NUMERIC},
+		F_JOINDATE=#{joinDate,jdbcType=DATE},
+		F_JIEHUNDAY=#{jiehunDay,jdbcType=DATE},
+		F_JOBTYPE=#{jobType,jdbcType=VARCHAR},
+		F_COMMENT=#{comment,jdbcType=CLOB}
+		WHERE
+		ID=#{id}
+	</update>
+	
+		    
+	<select id="getById" parameterType="java.lang.Long" resultMap="Lgeditors">
+		SELECT <include refid="columns"/>
+		FROM W_LGEDITORS
+		WHERE
+		ID=#{id}
+	</select>
+	
+	<select id="getAll" resultMap="Lgeditors">
+		SELECT <include refid="columns"/>
+		FROM W_LGEDITORS   
+		<include refid="dynamicWhere" />
+		<if test="@Ognl@isNotEmpty(orderField)">
+		order by ${orderField} ${orderSeq}
+		</if>
+		<if test="@Ognl@isEmpty(orderField)">
+		order by ID  desc
+		</if>
+	</select>
+</mapper>

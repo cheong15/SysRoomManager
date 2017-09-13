@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="net.gmcc.gz.model.am.Announcement">
+	<resultMap id="Announcement" type="net.gmcc.gz.model.am.Announcement">
+		<id property="id" column="ID" jdbcType="NUMERIC"/>
+		<result property="title" column="TITLE" jdbcType="VARCHAR"/>
+		<result property="contents" column="CONTENTS" jdbcType="CLOB"/>
+		<result property="type" column="TYPE" jdbcType="VARCHAR"/>
+		<result property="publishTime" column="PUBLISH_TIME" jdbcType="TIMESTAMP"/>
+		<result property="overdueTime" column="OVERDUE_TIME" jdbcType="TIMESTAMP"/>
+		<result property="status" column="STATUS" jdbcType="VARCHAR"/>
+		<result property="creatorPortalid" column="CREATOR_PORTALID" jdbcType="VARCHAR"/>
+		<result property="creatorName" column="CREATOR_NAME" jdbcType="VARCHAR"/>
+		<result property="createTime" column="CREATE_TIME" jdbcType="TIMESTAMP"/>
+		<result property="editorPortalid" column="EDITOR_PORTALID" jdbcType="VARCHAR"/>
+		<result property="editorName" column="EDITOR_NAME" jdbcType="VARCHAR"/>
+		<result property="editTime" column="EDIT_TIME" jdbcType="TIMESTAMP"/>
+		<result property="checkerPortalid" column="CHECKER_PORTALID" jdbcType="VARCHAR"/>
+		<result property="checkerName" column="CHECKER_NAME" jdbcType="VARCHAR"/>
+		<result property="checkTime" column="CHECK_TIME" jdbcType="TIMESTAMP"/>
+		<result property="publishDept" column="PUBLISH_DEPT" jdbcType="VARCHAR"/>
+		<result property="checkOpinion" column="CHECK_OPINION" jdbcType="VARCHAR"/>
+	</resultMap>
+
+	<sql id="columns">
+		ID,TITLE,CONTENTS,TYPE,PUBLISH_TIME,OVERDUE_TIME,STATUS,CREATOR_PORTALID,CREATOR_NAME,CREATE_TIME,EDITOR_PORTALID,EDITOR_NAME,EDIT_TIME,CHECKER_PORTALID,CHECKER_NAME,CHECK_TIME,PUBLISH_DEPT,CHECK_OPINION
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<if test="@Ognl@isNotEmpty(id)"> AND ID  =#{id} </if>
+			<if test="@Ognl@isNotEmpty(title)"> AND TITLE  LIKE #{title}  </if>
+			<if test="@Ognl@isNotEmpty(type)"> AND TYPE  LIKE #{type}  </if>
+			<if test="@Ognl@isNotEmpty(publishTime)"> AND PUBLISH_TIME  =#{publishTime} </if>
+			<if test="@Ognl@isNotEmpty(beginpublishTime)"> AND PUBLISH_TIME  >=#{beginpublishTime,jdbcType=TIMESTAMP} </if>
+			<if test="@Ognl@isNotEmpty(endpublishTime)"> AND PUBLISH_TIME <![CDATA[ <=#{endpublishTime,jdbcType=TIMESTAMP}]]> </if>
+			<if test="@Ognl@isNotEmpty(overdueTime)"> AND OVERDUE_TIME  =#{overdueTime} </if>
+			<if test="@Ognl@isNotEmpty(beginoverdueTime)"> AND OVERDUE_TIME  >=#{beginoverdueTime,jdbcType=TIMESTAMP} </if>
+			<if test="@Ognl@isNotEmpty(endoverdueTime)"> AND OVERDUE_TIME <![CDATA[ <=#{endoverdueTime,jdbcType=TIMESTAMP}]]> </if>
+			<if test="@Ognl@isNotEmpty(status)"> AND STATUS  LIKE #{status}  </if>
+			<if test="@Ognl@isNotEmpty(creatorPortalid)"> AND CREATOR_PORTALID  LIKE #{creatorPortalid}  </if>
+			<if test="@Ognl@isNotEmpty(creatorName)"> AND CREATOR_NAME  LIKE #{creatorName}  </if>
+			<if test="@Ognl@isNotEmpty(createTime)"> AND CREATE_TIME  =#{createTime} </if>
+			<if test="@Ognl@isNotEmpty(begincreateTime)"> AND CREATE_TIME  >=#{begincreateTime,jdbcType=TIMESTAMP} </if>
+			<if test="@Ognl@isNotEmpty(endcreateTime)"> AND CREATE_TIME <![CDATA[ <=#{endcreateTime,jdbcType=TIMESTAMP}]]> </if>
+			<if test="@Ognl@isNotEmpty(editorPortalid)"> AND EDITOR_PORTALID  LIKE #{editorPortalid}  </if>
+			<if test="@Ognl@isNotEmpty(editorName)"> AND EDITOR_NAME  LIKE #{editorName}  </if>
+			<if test="@Ognl@isNotEmpty(editTime)"> AND EDIT_TIME  =#{editTime} </if>
+			<if test="@Ognl@isNotEmpty(begineditTime)"> AND EDIT_TIME  >=#{begineditTime,jdbcType=TIMESTAMP} </if>
+			<if test="@Ognl@isNotEmpty(endeditTime)"> AND EDIT_TIME <![CDATA[ <=#{endeditTime,jdbcType=TIMESTAMP}]]> </if>
+			<if test="@Ognl@isNotEmpty(checkerPortalid)"> AND CHECKER_PORTALID  LIKE #{checkerPortalid}  </if>
+			<if test="@Ognl@isNotEmpty(checkerName)"> AND CHECKER_NAME  LIKE #{checkerName}  </if>
+			<if test="@Ognl@isNotEmpty(checkTime)"> AND CHECK_TIME  =#{checkTime} </if>
+			<if test="@Ognl@isNotEmpty(begincheckTime)"> AND CHECK_TIME  >=#{begincheckTime,jdbcType=TIMESTAMP} </if>
+			<if test="@Ognl@isNotEmpty(endcheckTime)"> AND CHECK_TIME <![CDATA[ <=#{endcheckTime,jdbcType=TIMESTAMP}]]> </if>
+			<if test="@Ognl@isNotEmpty(publishDept)"> AND PUBLISH_DEPT  LIKE #{publishDept}  </if>
+		</where>
+	</sql>
+
+	<insert id="add" parameterType="net.gmcc.gz.model.am.Announcement">
+		INSERT INTO AM_ANNOUNCEMENT
+		(ID,TITLE,CONTENTS,TYPE,PUBLISH_TIME,OVERDUE_TIME,STATUS,CREATOR_PORTALID,CREATOR_NAME,CREATE_TIME,EDITOR_PORTALID,EDITOR_NAME,EDIT_TIME,CHECKER_PORTALID,CHECKER_NAME,CHECK_TIME,PUBLISH_DEPT)
+		VALUES
+		(#{id,jdbcType=NUMERIC}, #{title,jdbcType=VARCHAR}, #{contents,jdbcType=CLOB}, #{type,jdbcType=VARCHAR}, #{publishTime,jdbcType=TIMESTAMP}, #{overdueTime,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR}, #{creatorPortalid,jdbcType=VARCHAR}, #{creatorName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{editorPortalid,jdbcType=VARCHAR}, #{editorName,jdbcType=VARCHAR}, #{editTime,jdbcType=TIMESTAMP}, #{checkerPortalid,jdbcType=VARCHAR}, #{checkerName,jdbcType=VARCHAR}, #{checkTime,jdbcType=TIMESTAMP}, #{publishDept,jdbcType=VARCHAR})
+	</insert>
+	
+	<delete id="delById" parameterType="java.lang.Long">
+		DELETE FROM AM_ANNOUNCEMENT 
+		WHERE
+		ID=#{id}
+	</delete>
+	
+	<update id="update" parameterType="net.gmcc.gz.model.am.Announcement">
+		UPDATE AM_ANNOUNCEMENT SET
+		TITLE=#{title,jdbcType=VARCHAR},
+		CONTENTS=#{contents,jdbcType=CLOB},
+		TYPE=#{type,jdbcType=VARCHAR},
+		PUBLISH_TIME=#{publishTime,jdbcType=TIMESTAMP},
+		OVERDUE_TIME=#{overdueTime,jdbcType=TIMESTAMP},
+		CREATOR_PORTALID=#{creatorPortalid,jdbcType=VARCHAR},
+		CREATOR_NAME=#{creatorName,jdbcType=VARCHAR},
+		CREATE_TIME=#{createTime,jdbcType=TIMESTAMP},
+		EDITOR_PORTALID=#{editorPortalid,jdbcType=VARCHAR},
+		EDITOR_NAME=#{editorName,jdbcType=VARCHAR},
+		EDIT_TIME=#{editTime,jdbcType=TIMESTAMP},
+		CHECKER_PORTALID=#{checkerPortalid,jdbcType=VARCHAR},
+		CHECKER_NAME=#{checkerName,jdbcType=VARCHAR},
+		CHECK_TIME=#{checkTime,jdbcType=TIMESTAMP},
+		PUBLISH_DEPT=#{publishDept,jdbcType=VARCHAR}
+		WHERE
+		ID=#{id}
+	</update>
+		    
+	<select id="getById" parameterType="java.lang.Long" resultMap="Announcement">
+		SELECT <include refid="columns"/>
+		FROM AM_ANNOUNCEMENT
+		WHERE
+		ID=#{id}
+	</select>
+	
+	<select id="getAll" resultMap="Announcement">
+		SELECT <include refid="columns"/>
+		FROM AM_ANNOUNCEMENT   
+		<include refid="dynamicWhere" />
+		<if test="@Ognl@isNotEmpty(orderField)">
+		order by ${orderField} ${orderSeq}
+		</if>
+		<if test="@Ognl@isEmpty(orderField)">
+		order by ID  desc
+		</if>
+	</select>
+	
+	<select id="getList" resultMap="Announcement">
+		SELECT ID,TITLE,CONTENTS,TYPE,PUBLISH_TIME,OVERDUE_TIME,STATUS,PUBLISH_DEPT
+		FROM AM_ANNOUNCEMENT   
+		where STATUS='发布'
+		<if test="@Ognl@isNotEmpty(title)"> AND TITLE LIKE concat(concat('%',#{title}),'%')</if>
+		<if test="@Ognl@isNotEmpty(type)"> AND TYPE=#{type}</if>
+		<if test="@Ognl@isNotEmpty(publishDept)"> AND PUBLISH_DEPT=#{publishDept}</if>
+		<if test="@Ognl@isNotEmpty(publishTime)"> AND PUBLISH_TIME  >=#{beginpublishTime,jdbcType=TIMESTAMP} </if>
+		<if test="@Ognl@isNotEmpty(overdueTime)"> AND OVERDUE_TIME <![CDATA[ <=#{endoverdueTime,jdbcType=TIMESTAMP}]]> </if>
+		<if test="@Ognl@isNotEmpty(orderField)">
+		order by ${orderField} ${orderSeq}
+		</if>
+		<if test="@Ognl@isEmpty(orderField)">
+		order by ID  desc
+		</if>
+	</select>
+	
+	<update id="operateStatusById" parameterType="net.gmcc.gz.model.am.Announcement">
+		UPDATE AM_ANNOUNCEMENT SET STATUS=#{status,jdbcType=VARCHAR},CHECK_OPINION=#{checkOpinion,jdbcType=VARCHAR}
+		WHERE ID=#{id}
+	</update>
+</mapper>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources filePath="D:\init.sql">
+	
+	<resource pk="RESID" relation-to-pk="PARENTID" topValue="0">
+		<sql>SELECT * FROM SYS_RES WHERE SYSTEMID=1 AND PARENTID=${PARENTID}</sql>
+		<template>
+			insert into SYS_RES (RESID, RESNAME, ALIAS, SN, ICON, PARENTID, DEFAULTURL, ISFOLDER, ISDISPLAYINMENU, ISOPEN, SYSTEMID, PATH)
+			values (${RESID}, '${RESNAME}', '${ALIAS}', ${SN}, '${ICON}', ${PARENTID}, '${DEFAULTURL}', ${ISFOLDER}, ${ISDISPLAYINMENU}, ${ISOPEN}, ${SYSTEMID}, '');
+		</template>
+	</resource>
+	
+	<resource pk="ID">
+		<sql>select * from sys_script</sql>
+		<template>
+			insert into sys_script (ID, NAME, SCRIPT, CATEGORY, MEMO)
+			values (${ID}, '${NAME}', '${SCRIPT}', '${CATEGORY}', '${MEMO}');
+		</template>
+	</resource>
+	
+	<resource pk="TEMPLATEID">
+		<sql>select * from SYS_TEMPLATE</sql>
+		<template>
+			insert into SYS_TEMPLATE (templateId,name,innerContent,mailContent,smsContent,isDefault,useType,title)
+			values (${TEMPLATEID}, '${NAME}', '${INNERCONTENT}', '${MAILCONTENT}', '${SMSCONTENT}',${ISDEFAULT},${USETYPE},'${TITLE}');
+		</template>
+	</resource>
+	
+	<resource pk="ID">
+		<sql>select * from BPM_FORM_RULE</sql>
+		<template>
+			insert into BPM_FORM_RULE (id,name,REGULATION,memo,tipInfo)
+			values (${ID}, '${NAME}', '${REGULATION}', '${MEMO}', '${TIPINFO}');
+		</template>
+	</resource>
+	
+</resources>

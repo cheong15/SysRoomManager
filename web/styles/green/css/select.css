@@ -1,0 +1,140 @@
+@CHARSET "UTF-8";
+/*global css*/
+img {
+	border: 0
+}
+
+#setSubSystem{	
+	border:1px solid #aac9ce;
+	background:#FFF;	
+	font-family:"黑体";
+	font-size:14px;
+	font-weight:bold;
+	color:#35607f;
+}
+#setSubSystem option{	
+	padding-top:5px;
+	padding-left:10px;
+	border-bottom:1px dashed #aac8d2;
+}
+#setSubSystem option:hover{	
+	background-color:#50B1C2;
+}
+
+/*-------更多操作 -------*/
+#welcomeContainer{
+	font-size:13px;
+	color:#e2e2e2;
+	font-family:"幼圆";
+	position:relative;
+	float:left;
+	margin:0 8px 0 0;
+}
+
+#loginContainer {
+    position:relative;
+    float:right;
+    font-size:15px;    
+}
+
+#loginContainer a{
+	text-decoration:none;
+}
+
+#loginButton {
+    background:url(../images/icons/icons_09-12.png) 0 0 no-repeat;
+   	display:inline-block;
+   	height:20px;
+   	margin-left:8px;   	
+   	overflow:hidden;
+   	width:20px;
+   	text-decoration:none;
+   	padding:1px;
+}
+
+#loginBox{
+	position:absolute;
+    top:20px;
+    right:0;   
+}
+
+.itemDiv {
+    display:none;
+    border-radius:8px 0 8px 8px;    
+    -moz-border-radius:8px;    
+    -webkit-border-radius:8px;  
+    border:1px solid #fff;
+    background-color: #DAEF42;
+    /*阴影*/
+    filter: progid:DXImageTransform.Microsoft.Shadow(color='#969696', Direction=135, Strength=5);/*for ie6,7,8*/
+	-moz-box-shadow:2px 2px 5px #969696;/*firefox*/
+	-webkit-box-shadow:2px 2px 5px #969696;/*webkit*/
+	box-shadow:2px 2px 5px #969696;/*opera或ie9*/
+}
+
+.itemDiv ul li{
+    margin:8px;
+}
+
+.itemDiv li a:hover{
+    color:#fff;
+}
+
+#loginButton.active {
+    -moz-border-radius:8px;
+    -webkit-border-radius:8px;
+    border-radius:8px 8px 0 0;
+    border:1px solid #fff;
+    padding: 0 !important;
+    background:#DAEF42 url(../images/icons/icons_09-12_headstand.png) no-repeat center;
+}
+
+#shadeEm {
+    position:absolute;
+    width:100%;
+    height:3px;
+    display:none;
+    background:#DAEF42;
+    top:19px;
+    width:20px;
+    right:1px;
+}
+
+a.more{
+	padding:6px 6px 6px 30px;
+	color:#102A49;
+	font-size:13px;
+}
+
+a.curOrg{
+	padding:6px;
+	color:orange;
+	font-size:13px;
+	cursor:default;
+}
+
+a.normalOrg{
+	padding:6px;
+	color:black;
+	font-size:13px;
+}
+
+a.more.edit2{
+	background:url(../images/icons/key--pencil.png) no-repeat 5px 8px;
+}
+
+a.more.detail2{
+	background:url(../images/icons/magnifier-left.png) no-repeat 5px 8px;
+}
+
+a.more.help2{
+	background:url(../images/icons/icons_14-19.png) no-repeat 5px 8px;
+}
+
+a.more.switch2{
+	background:url(../images/icons/direction.png) no-repeat 5px 8px;
+}
+
+a.more.exit2{
+	background:url(../images/icons/door-open-out.png) no-repeat 5px 8px;
+}

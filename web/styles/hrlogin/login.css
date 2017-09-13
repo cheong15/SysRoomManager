@@ -1,0 +1,32 @@
+* { margin: 0; padding: 0;}
+img { border: 0;}
+body {background: url(images/bg_login.jpg) repeat;  font-family: 'Microsoft Yahei',verdana; font-size: 12px;overflow: hidden;}
+.htlogo_login { background: url(images/htlogo_login.jpg) no-repeat; width: 100px; height: 26px; display: inline-block; margin: 9px;}
+.l { float: left;}
+.r { float: right;}
+.top_login { background: #515151; height: 45px; color: #fff; line-height: 45px;}
+.bpmlogo_login {  background: url(images/logo.png) no-repeat; width: 475px; height: 57px; display: inline-block;margin-right:60px;margin-top: 30px;margin-bottom: 30px;}
+.main_login, .main_login2 { text-align: right; height: 518px;position: absolute; top: 50%;left: 50%;margin-left:-440px;margin-top:-250px;}
+.content_login {  background: url(images/loginform.png) no-repeat;height: 518px;border: solid 0px #7C7C7C; border-radius: 5px; padding: 25px 35px;}
+.login_input { width: 280px; height: 36px; line-height:36px; margin: 10px 0; border: solid 1px #7C7C7C; border-radius: 5px; padding: 0 5px; background-color:#fff!important;}
+.content_login .vcode input[type="text"] { width: 130px;}
+.vcode div {width: 100px; display: inline-block;}
+.vcode { width: 300px; display: inline-block;}
+.column { margin-right:60px;float:right}
+.vcode_img { vertical-align: top; margin-left: 65px;}
+.vcode_img img { width: 82px; padding: 13px 0px 5px;}
+.vcode_img a { line-height: 25px; color: #4b93ff; cursor: pointer;}
+.errormsg {margin-top: 5px;}
+.confirm { border-top: solid 0px #d4d4d4; border-bottom: solid 0px #d4d4d4; border-bottom-left-radius: 5px;  border-bottom-right-radius: 5px;  padding: 30px 60px 45px;float:right;}
+.btn { width: 126px; height: 52px; border-radius: 3px; display: inline-block; text-align: center; line-height: 36px; color: #fff; margin-left: 10px; cursor: pointer;}
+.reset_btn { background: url(images/reset_btn.png) ;vertical-align:middle; }
+.login_btn { background: url(images/login_btn.png) ; vertical-align:middle; }
+.login_btn:hover {background: url(images/login_btn_hover.png) ; vertical-align:middle;}
+.reset_btn:hover {background: url(images/reset_btn_hover.png) ; vertical-align:middle;} 
+.confirm input[type="checkbox"] { margin-top: 19px; margin-right: 5px;width: 15px;height: 15px;}
+.copy { color: #515151; position: absolute; left: 50%; margin-left: -100px; bottom: 15px;}
+.main_login2 { width: 410px}
+.main_login { width: 890px;}
+.btn2 { margin-top: -34px; line-height: 20px; font-family: 'Microsoft Yahei',verdana; font-size:12px;}
+.logo2 { margin-left: 60px; margin-bottom: 50px;}
+.login_font {font-size: 24px;color: #7C7C7C;margin-right: 10px;}

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.hotent.platform.model.system.UserPosition">
+	<resultMap id="UserPosition" type="com.hotent.platform.model.system.UserPosition">
+		<id property="userPosId" column="userPosId" jdbcType="NUMERIC"/>
+		<result property="posId" column="posId" jdbcType="NUMERIC"/>
+		<result property="userId" column="userId" jdbcType="NUMERIC"/>
+		<result property="isPrimary" column="isPrimary" jdbcType="NUMERIC"/>
+	</resultMap>
+	
+	<sql id="columns">
+		userPosId,posId,userId,isPrimary
+	</sql>
+	
+	<insert id="add" parameterType="com.hotent.platform.model.system.UserPosition">
+		INSERT INTO sys_user_pos
+		(<include refid="columns"/>)
+		VALUES
+		(#{userPosId,jdbcType=NUMERIC}, #{posId,jdbcType=NUMERIC}, #{userId,jdbcType=NUMERIC}, #{isPrimary,jdbcType=NUMERIC})
+	</insert>
+	
+	<delete id="delById" parameterType="java.lang.Long">
+		DELETE FROM SYS_USER_POS 
+		WHERE
+		userPosId=#{userPosId}
+	</delete>
+	
+	<delete id="delByUserId" parameterType="java.lang.Long">
+		DELETE FROM SYS_USER_POS  WHERE userId=#{userId} 
+	</delete>
+	
+	<delete id="delUserPosByIds" parameterType="java.util.Map">
+		DELETE FROM SYS_USER_POS 
+		WHERE
+		userId=#{userId} and posId=#{posId}
+	</delete>
+	
+	<update id="update" parameterType="com.hotent.platform.model.system.UserPosition">
+		UPDATE sys_user_pos SET
+		posId=#{posId,jdbcType=NUMERIC} , 
+		userId=#{userId,jdbcType=NUMERIC} , 
+		isPrimary=#{isPrimary,jdbcType=NUMERIC} 
+		WHERE
+		userPosId=#{userPosId}
+	</update>
+	
+	
+	<update id="updNotPrimaryByUser" parameterType="Long">
+		UPDATE sys_user_pos SET isPrimary=0  WHERE userId=#{userId}
+	</update>
+	
+	<select id="getById" parameterType="java.lang.Long" resultMap="UserPosition">
+		SELECT up.userPosId,up.posId,up.userId,up.isPrimary, u.fullname,p.posName
+		FROM SYS_USER_POS up,SYS_USER u,SYS_POSITION p
+		WHERE
+		up.userid=u.userid
+		AND up.posid=p.posid
+		AND userPosId=#{userPosId}
+	</select>
+	
+	<select id="getAll" resultMap="UserPosition"  parameterType="java.util.Map">
+		SELECT up.userPosId,up.posId,up.userId,up.isPrimary, u.fullname,u.account,p.posName
+		FROM SYS_USER_POS	up,SYS_USER u,SYS_POSITION p 
+		
+		<where>
+			AND up.userId=u.userId
+			AND up.posid=p.posid
+			<if test="@Ognl@isNotEmpty(fullname)"> AND u.fullname  LIKE #{fullname}  </if>
+			<if test="@Ognl@isNotEmpty(account)"> AND u.account  LIKE  #{account}  </if>
+			<if test="@Ognl@isNotEmpty(posId)"> AND up.posId  =#{posId} </if>
+			<if test="@Ognl@isNotEmpty(isPrimary)"> AND up.isPrimary  =#{isPrimary} </if>
+		</where>
+		
+		<if test="@Ognl@isNotEmpty(orderField)">
+		order by ${orderField} ${orderSeq}
+		</if>
+		<if test="@Ognl@isEmpty(orderField)">
+		order by userPosId  desc
+		</if>
+	</select>
+	
+	<delete id="delByPosId" parameterType="java.lang.Long">
+		DELETE FROM SYS_USER_POS 
+		WHERE
+		posId=#{posId}
+	</delete>
+	
+	<select id="getUserPosModel" parameterType="java.util.Map" resultMap="UserPosition">
+	    select <include refid="columns"/>
+	    from SYS_USER_POS where   userId=#{userId}   and posId=#{posId} 
+	</select>
+	
+	<select id="getUserIdsByPosId" resultType="java.lang.Long">
+		select distinct userId from SYS_USER_POS where posId=#{posId}
+	</select>
+	
+	<select id="getUserByPosIds"  resultType="com.hotent.platform.model.system.UserPosition">
+		select distinct a.userId,b.fullname  from SYS_USER_POS a,sys_user B where A.userId=B.userId and posId in (${posIds})
+	</select>
+	
+	<select id="getByUserId" parameterType="java.lang.Long" resultType="com.hotent.platform.model.system.UserPosition">
+		SELECT a.userPosId,a.posId,a.userId,a.isPrimary, b.posName
+		FROM SYS_USER_POS	a,SYS_POSITION b
+		where a.posid=b.posid and a.userId=#{userId}
+	</select>
+	
+	<select id="getMainPositionByUserId" parameterType="java.lang.Long" resultType="com.hotent.platform.model.system.UserPosition">
+		SELECT a.userPosId,a.posId,a.userId,a.isPrimary, b.posName
+		FROM SYS_USER_POS	a,SYS_POSITION b
+		where a.posid=b.posid and a.userId=#{userId} and a.isPrimary=1
+	</select>
+	
+	
+	<select id="getByPosId" resultMap="UserPosition"  >
+		SELECT up.userPosId,up.posId,up.userId,up.isPrimary, u.fullname,u.account,p.posName
+		FROM SYS_USER_POS	up,SYS_USER u,SYS_POSITION p 
+		where  up.userId=u.userId AND up.posid=p.posid AND up.posId  =#{posId}
+		order by userPosId  desc
+		
+	</select>
+
+	
+</mapper>

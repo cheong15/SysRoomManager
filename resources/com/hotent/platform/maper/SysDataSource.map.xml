@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.hotent.platform.model.system.SysDataSource">
+	<resultMap id="Result" type="com.hotent.platform.model.system.SysDataSource">
+		<id property="id" column="id" jdbcType="NUMERIC"/>
+		<result property="name" column="name" jdbcType="VARCHAR"/>
+		<result property="alias" column="alias" jdbcType="VARCHAR"/>
+		<result property="driverName" column="driverName" jdbcType="VARCHAR"/>
+		<result property="url" column="url" jdbcType="VARCHAR"/>
+		<result property="userName" column="userName" jdbcType="VARCHAR"/>
+		<result property="password" column="password" jdbcType="VARCHAR"/>
+		<result property="dbType" column="dbType" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<sql id="columns">
+		id,name,alias,driverName,url,userName,password,dbType
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<if test="@Ognl@isNotEmpty(name)"> AND name  LIKE #{name}  </if>
+			<if test="@Ognl@isNotEmpty(alias)"> AND alias  LIKE #{alias}  </if>
+			<if test="@Ognl@isNotEmpty(dbType)"> AND dbType  = #{dbType} </if>
+		</where>
+	</sql>
+
+	<insert id="add" parameterType="com.hotent.platform.model.system.SysDataSource">
+		INSERT INTO sys_datasource
+		(<include refid="columns"/>)
+		VALUES
+		(#{id,jdbcType=NUMERIC}, #{name,jdbcType=VARCHAR}, #{alias,jdbcType=VARCHAR}, #{driverName,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{dbType,jdbcType=VARCHAR})
+	</insert>
+	
+	<delete id="delById" parameterType="java.lang.Long">
+		DELETE FROM sys_datasource 
+		WHERE
+		ID=#{id}
+	</delete>
+	
+	<update id="update" parameterType="com.hotent.platform.model.system.SysDataSource">
+		UPDATE sys_datasource SET
+		name=#{name,jdbcType=VARCHAR} , 
+		alias=#{alias,jdbcType=VARCHAR} , 
+		driverName=#{driverName,jdbcType=VARCHAR} , 
+		url=#{url,jdbcType=VARCHAR} , 
+		userName=#{userName,jdbcType=VARCHAR} , 
+		password=#{password,jdbcType=VARCHAR} , 
+		dbType=#{dbType,jdbcType=VARCHAR} 
+		WHERE
+		ID=#{id}
+	</update>
+	
+	<select id="getById" parameterType="java.lang.Long" resultMap="Result">
+		SELECT <include refid="columns"/>
+		FROM sys_datasource
+		WHERE
+		ID=#{id}
+	</select>
+	
+	<select id="getByAlias" parameterType="String" resultMap="Result">
+		SELECT <include refid="columns"/>
+		FROM sys_datasource
+		WHERE  ALIAS = #{ALIAS}
+	</select>
+	
+	<select id="getAll" resultMap="Result">
+		SELECT <include refid="columns"/>
+		FROM sys_datasource   
+		<include refid="dynamicWhere" />
+		<if test="@Ognl@isNotEmpty(orderField)">
+		order by ${orderField} ${orderSeq}
+		</if>
+		<if test="@Ognl@isEmpty(orderField)">
+		order by ID  desc
+		</if>
+	</select>
+	
+	<select id="isAliasExisted" parameterType="java.lang.String" resultType="int">
+		SELECT COUNT(*) FROM SYS_DATASOURCE WHERE ALIAS = #{ALIAS}
+	</select>
+	
+	<select id="isAliasExistedByUpdate" parameterType="com.hotent.platform.model.system.SysDataSource" resultType="int">
+		SELECT COUNT(*) FROM SYS_DATASOURCE WHERE ALIAS = #{alias} AND ID != #{id}
+	</select>
+</mapper>

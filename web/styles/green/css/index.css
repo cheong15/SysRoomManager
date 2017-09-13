@@ -1,0 +1,274 @@
+﻿*{
+	margin:0;
+	padding:0;
+}
+.index_top{
+	margin:0;
+	left:0;
+	height:95px;
+	width:100%;
+	
+	position: relative;
+	z-index: 100;
+	background:url(../images/head_bg.jpg) repeat-x;
+	
+}
+.head_bg{
+	position:absolute;
+	right:0px;
+	top:0px;
+	height:92px;
+	margin:0;
+	background:url(../images/head_Shading.jpg) right top no-repeat;
+	width:100%;
+	z-index: 1;
+	
+}
+.left_logo{
+	position:absolute;
+	width:300px;
+	z-index:100;
+}
+.search_welcome{
+	position:absolute;
+	top:-10px;
+	right:0px;
+	height:40px;
+	z-index: 99999;
+}
+
+.search_panel{
+	float:left;
+	margin-top:12px;
+	padding-right:12px;
+}
+
+.search_box{
+	border:1px solid #b1babd;
+	width:203px;
+	height:22px;
+	background:#fff;
+}
+.search_text{
+	width:180px;
+	height:14px;
+	background:#fff;
+	border:none;
+}
+
+.search_button{
+	width:20px;
+	height:20px;
+	border:none;
+	background:url(../images/icons/icons_22.png) no-repeat;
+	_filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="../images/icons/icons_22.png");
+}
+
+.welcome_panel{
+	margin-top:12px;
+	float:right;
+	margin-right:10px;
+}
+
+div.index_menu{
+	position:absolute;
+	right:110px;
+	top:35px;
+	height:40px;
+	width: 60%;	
+	z-index:100;	
+}
+
+div.nav_button{
+	height:40px;
+	width:36px;
+	float: right;
+	margin-right: 2px;
+}
+
+/*头部链接样式*/
+a.menuItem{
+	cursor:pointer;
+	height:34px;
+	margin-left:15px;
+	padding-left:10px;
+
+	font-size:14px;
+	display: inline-block;
+	
+	background: url(../images/menu_bg.png) no-repeat; 
+	
+	
+}
+
+a.menuItem span{
+	margin-right:-5px;
+	color:#FFF;
+	font-weight:bold;
+	text-decoration:none;
+	 
+	padding-top:6px;
+	padding-right: 15px;
+	display: inline-block;
+	height:27px;	
+	background: url("../images/menu_bg.png") no-repeat scroll right bottom transparent;
+	
+}
+a.menuItem_hover{
+	/*
+	background: url(../images/menu_click.png) no-repeat ; 
+	*/
+}
+
+a.menuItem_hover span{
+	color:#CEFE48;
+	font-weight:bold;
+	/*
+	background: url(../images/menu_click.png) no-repeat bottom right; 
+	*/
+}
+
+a.menuItem img{
+	margin-top:8px;
+	margin-right:3px;
+	float: left;
+}
+
+div.menuParent{	
+    right:40px;
+	width:90%;
+    height:32px;
+	float:left;
+	overflow:hidden;
+	position:relative;
+	z-index: 100;
+}
+
+div.menuPanel{	
+	white-space:nowrap;	
+	position:absolute;
+	display:block;
+	z-index: 100;
+}
+
+a.nav_left,a.nav_right{
+	cursor:pointer;
+	display:none;
+	height:32px;
+	width:0px;
+	padding-left: 18px;
+	float:left;
+	z-index: 100;
+}
+
+a.nav_left{
+	background:url(../images/nav_left.png) no-repeat;
+}
+
+a.nav_right{
+	background:url(../images/nav_right.png) no-repeat;
+}
+
+a.nav_left:hover{
+	background:url(../images/nav_left_hover.png) no-repeat;
+}
+
+a.nav_right:hover{
+	background:url(../images/nav_right_hover.png) no-repeat;
+}
+
+div.changge_skin{
+	position: absolute;
+	right: 10px;
+	top:40px;
+	z-index: 100;
+}
+
+div.changge_skin img{
+	margin-left: 2px;
+}
+
+
+.show_sys{
+	width:192px;
+	z-index:10000;
+	border:1px solid #aac9ce;
+	border-top:none;
+	background:#FFF;
+	margin-left:290px;
+	font-family:"黑体";
+	font-size:14px;
+	font-weight:bold;
+	color:#35607f;
+	display:none;
+	position:absolute;
+	margin-left:118px;
+	margin-top:-2px;
+}
+
+
+.select_sys{
+	width:200px;
+	height:22px;
+	border:1px solid #a9b2c3;
+	background:#fff;
+	font-family:"黑体";
+	font-size:14px;
+	font-weight:bold;
+	color:#35607f;
+	margin-left:290px;
+	padding-left:10px;
+
+}
+.select_sys img{
+	float:right;
+
+	cursor:pointer;
+	height:22px;
+	position:absolute;
+	*+margin-top:-1px;
+	*+margin-left:34px;
+	border-left:1px solid #b2bbcc;
+}
+
+.select_sys span{
+	width:132px;
+	display:inline-block;
+	height:20px;
+}
+.show_sys a{
+	color:#35607f;
+}
+.show_sys ul{
+	list-style:none;
+}
+.show_sys ul li{
+	width:180px;
+	height:28px;
+	padding-top:5px;
+	padding-left:10px;
+	border-bottom:1px dashed #aac8d2;
+}
+.show_sys ul li a{
+	width:180px;
+	display:block;
+	height:28px;
+	margin-left:-10px;
+	padding-left:10px;
+}
+.show_sys ul li a:hover{
+	background:url(../images/content_bg_hover.jpg) repeat-x;
+}
+.msg_div{
+	padding:0 5px;
+	height:20px;
+	line-height:20px;
+}
+.msg_div img{
+	margin:0;
+	vertical-align:middle;
+}
+.msg_div a{
+	margin:0;
+	vertical-align:middle;
+}

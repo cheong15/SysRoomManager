@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="net.gmcc.gz.model.attach.Attachment">
+	<resultMap id="Attachment" type="net.gmcc.gz.model.attach.Attachment">
+		<id property="fileid" column="FILEID" jdbcType="VARCHAR"/>
+		<result property="businessType" column="BUSINESS_TYPE" jdbcType="VARCHAR"/>
+		<result property="fileType" column="FILE_TYPE" jdbcType="VARCHAR"/>
+		<result property="businessId" column="BUSINESS_ID" jdbcType="VARCHAR"/>
+		<result property="oriFilename" column="ORI_FILENAME" jdbcType="VARCHAR"/>
+		<result property="newFilename" column="NEW_FILENAME" jdbcType="VARCHAR"/>
+		<result property="filePath" column="FILE_PATH" jdbcType="VARCHAR"/>
+		<result property="sort" column="SORT" jdbcType="NUMERIC"/>
+		<result property="fileSubpfix" column="FILE_SUBPFIX" jdbcType="VARCHAR"/>
+		<result property="fileIcon" column="FILE_ICON" jdbcType="VARCHAR"/>
+		<result property="fileSize" column="FILE_SIZE" jdbcType="NUMERIC"/>
+		<result property="uploadTime" column="UPLOAD_TIME" jdbcType="TIMESTAMP"/>
+		<result property="uploaderId" column="UPLOADER_ID" jdbcType="VARCHAR"/>
+		<result property="uploaderName" column="UPLOADER_NAME" jdbcType="VARCHAR"/>
+		<result property="remark" column="REMARK" jdbcType="VARCHAR"/>
+	</resultMap>
+
+	<sql id="columns">
+		FILEID,BUSINESS_TYPE,FILE_TYPE,BUSINESS_ID,ORI_FILENAME,NEW_FILENAME,FILE_PATH,SORT,FILE_SUBPFIX,FILE_ICON,FILE_SIZE,UPLOAD_TIME,UPLOADER_ID,UPLOADER_NAME,REMARK
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<if test="@Ognl@isNotEmpty(fileid)"> AND FILEID  = #{fileid}  </if>
+			<if test="@Ognl@isNotEmpty(businessType)"> AND BUSINESS_TYPE  = #{businessType}  </if>
+			<if test="@Ognl@isNotEmpty(fileType)"> AND FILE_TYPE  = #{fileType}  </if>
+			<if test="@Ognl@isNotEmpty(businessId)"> AND BUSINESS_ID  = #{businessId}  </if>
+			<if test="@Ognl@isNotEmpty(oriFilename)"> AND ORI_FILENAME  LIKE #{oriFilename}  </if>
+			<if test="@Ognl@isNotEmpty(newFilename)"> AND NEW_FILENAME  LIKE #{newFilename}  </if>
+			<if test="@Ognl@isNotEmpty(filePath)"> AND FILE_PATH  = #{filePath}  </if>
+			<if test="@Ognl@isNotEmpty(sort)"> AND SORT  =#{sort} </if>
+			<if test="@Ognl@isNotEmpty(fileSubpfix)"> AND FILE_SUBPFIX  = #{fileSubpfix}  </if>
+			<if test="@Ognl@isNotEmpty(fileIcon)"> AND FILE_ICON  = #{fileIcon}  </if>
+			<if test="@Ognl@isNotEmpty(fileSize)"> AND FILE_SIZE  =#{fileSize} </if>
+			<if test="@Ognl@isNotEmpty(uploadTime)"> AND UPLOAD_TIME  =#{uploadTime} </if>
+			<!--<if test="@Ognl@isNotEmpty(beginuploadTime)"> AND UPLOAD_TIME  >=#{beginuploadTime,jdbcType=TIMESTAMP} </if>-->
+			<!--<if test="@Ognl@isNotEmpty(enduploadTime)"> AND UPLOAD_TIME <![CDATA[ <=#{enduploadTime,jdbcType=TIMESTAMP}]]> </if>-->
+			<if test="@Ognl@isNotEmpty(uploaderId)"> AND UPLOADER_ID  = #{uploaderId}  </if>
+			<if test="@Ognl@isNotEmpty(uploaderName)"> AND UPLOADER_NAME  = #{uploaderName}  </if>
+			<if test="@Ognl@isNotEmpty(remark)"> AND REMARK  LIKE #{remark}  </if>
+		</where>
+	</sql>
+
+	<insert id="add" parameterType="net.gmcc.gz.model.attach.Attachment">
+		INSERT INTO R_ATTACHMENT
+		(FILEID,BUSINESS_TYPE,FILE_TYPE,BUSINESS_ID,ORI_FILENAME,NEW_FILENAME,FILE_PATH,SORT,FILE_SUBPFIX,FILE_ICON,FILE_SIZE,UPLOAD_TIME,UPLOADER_ID,UPLOADER_NAME,REMARK)
+		VALUES
+		(#{fileid,jdbcType=VARCHAR}, #{businessType,jdbcType=VARCHAR}, #{fileType,jdbcType=VARCHAR}, #{businessId,jdbcType=VARCHAR}, #{oriFilename,jdbcType=VARCHAR}, #{newFilename,jdbcType=VARCHAR}, #{filePath,jdbcType=VARCHAR}, #{sort,jdbcType=NUMERIC}, #{fileSubpfix,jdbcType=VARCHAR}, #{fileIcon,jdbcType=VARCHAR}, #{fileSize,jdbcType=NUMERIC}, #{uploadTime,jdbcType=TIMESTAMP}, #{uploaderId,jdbcType=VARCHAR}, #{uploaderName,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
+	</insert>
+	
+	<delete id="delById" parameterType="java.lang.String">
+		DELETE FROM R_ATTACHMENT 
+		WHERE
+		FILEID=#{fileid}
+	</delete>
+	
+	<update id="update" parameterType="net.gmcc.gz.model.attach.Attachment">
+		UPDATE R_ATTACHMENT SET
+		BUSINESS_TYPE=#{businessType,jdbcType=VARCHAR},
+		FILE_TYPE=#{fileType,jdbcType=VARCHAR},
+		BUSINESS_ID=#{businessId,jdbcType=VARCHAR},
+		ORI_FILENAME=#{oriFilename,jdbcType=VARCHAR},
+		NEW_FILENAME=#{newFilename,jdbcType=VARCHAR},
+		FILE_PATH=#{filePath,jdbcType=VARCHAR},
+		SORT=#{sort,jdbcType=NUMERIC},
+		FILE_SUBPFIX=#{fileSubpfix,jdbcType=VARCHAR},
+		FILE_ICON=#{fileIcon,jdbcType=VARCHAR},
+		FILE_SIZE=#{fileSize,jdbcType=NUMERIC},
+		UPLOAD_TIME=#{uploadTime,jdbcType=TIMESTAMP},
+		UPLOADER_ID=#{uploaderId,jdbcType=VARCHAR},
+		UPLOADER_NAME=#{uploaderName,jdbcType=VARCHAR},
+		REMARK=#{remark,jdbcType=VARCHAR}
+		WHERE
+		FILEID=#{fileid}
+	</update>
+		    
+	<select id="getById" parameterType="java.lang.String" resultMap="Attachment">
+		SELECT <include refid="columns"/>
+		FROM R_ATTACHMENT
+		WHERE
+		FILEID=#{fileid}
+	</select>
+	
+	<select id="getAll" resultMap="Attachment">
+		SELECT <include refid="columns"/>
+		FROM R_ATTACHMENT   
+		<include refid="dynamicWhere" />
+		<if test="@Ognl@isNotEmpty(orderField)">
+		order by ${orderField} ${orderSeq}
+		</if>
+		<if test="@Ognl@isEmpty(orderField)">
+		order by FILEID  desc
+		</if>
+	</select>
+
+	<select id="getAllAttachment" resultMap="Attachment">
+		SELECT <include refid="columns"/>
+		FROM R_ATTACHMENT
+		<include refid="dynamicWhere" />
+		<if test="@Ognl@isNotEmpty(orderField)">
+			order by ${orderField} ${orderSeq}
+		</if>
+		<if test="@Ognl@isEmpty(orderField)">
+			order by FILEID  desc
+		</if>
+	</select>
+
+	<!--查询文件序列号-->
+	<select id="getSortNum" resultType="java.lang.Long">
+		SELECT max(sort)
+		FROM R_ATTACHMENT
+		<include refid="dynamicWhere" />
+	</select>
+
+</mapper>

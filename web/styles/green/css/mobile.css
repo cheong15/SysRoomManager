@@ -1,0 +1,24 @@
+@CHARSET "UTF-8";
+
+.myTask{
+	background:url(../images/mobile/myTask.jpg) no-repeat;
+}
+
+.myAttend{
+	background:url(../images/mobile/myAttend.jpg) no-repeat;
+}
+
+.myAssignee{
+	background:url(../images/mobile/myAssignee.jpg) no-repeat;
+}
+
+.taskAssignee{
+	background:url(../images/mobile/taskAssignee.jpg) no-repeat;
+}
+
+.userImage{
+	background:url(../images/mobile/userImage.jpg) no-repeat;
+	float: right;
+	width: 23px;
+	height: 20px;
+}

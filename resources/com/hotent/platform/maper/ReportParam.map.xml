@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.hotent.platform.model.system.ReportParam">
+	<resultMap id="ReportParam" type="com.hotent.platform.model.system.ReportParam">
+		<id property="PARAMID" column="PARAMID" jdbcType="NUMERIC"/>
+		<result property="REPORTID" column="REPORTID" jdbcType="NUMERIC"/>
+		<result property="PARAMNAME" column="PARAMNAME" jdbcType="VARCHAR"/>
+		<result property="PARAMKEY" column="PARAMKEY" jdbcType="VARCHAR"/>
+		<result property="DEFAULTVAL" column="DEFAULTVAL" jdbcType="VARCHAR"/>
+		<result property="PARAMTYPE" column="PARAMTYPE" jdbcType="VARCHAR"/>
+		<result property="SN" column="SN" jdbcType="NUMERIC"/>
+		<result property="PARAMTYPESTR" column="PARAMTYPESTR" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<sql id="columns">
+		PARAMID,REPORTID,PARAMNAME,PARAMKEY,DEFAULTVAL,PARAMTYPE,SN,PARAMTYPESTR
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<if test="@Ognl@isNotEmpty(PARAMID)"> AND PARAMID  =#{PARAMID} </if>
+			<if test="@Ognl@isNotEmpty(REPORTID)"> AND REPORTID  =#{REPORTID} </if>
+			<if test="@Ognl@isNotEmpty(PARAMNAME)"> AND PARAMNAME  LIKE #{PARAMNAME}  </if>
+			<if test="@Ognl@isNotEmpty(PARAMKEY)"> AND PARAMKEY  LIKE #{PARAMKEY}  </if>
+			<if test="@Ognl@isNotEmpty(DEFAULTVAL)"> AND DEFAULTVAL  LIKE #{DEFAULTVAL}  </if>
+			<if test="@Ognl@isNotEmpty(PARAMTYPE)"> AND PARAMTYPE  LIKE #{PARAMTYPE}  </if>
+			<if test="@Ognl@isNotEmpty(SN)"> AND SN  =#{SN} </if>
+			<if test="@Ognl@isNotEmpty(PARAMTYPESTR)"> AND PARAMTYPESTR  LIKE #{PARAMTYPESTR}  </if>
+		</where>
+	</sql>
+
+	<insert id="add" parameterType="com.hotent.platform.model.system.ReportParam">
+		INSERT INTO SYS_REPORT_PARAM
+		(PARAMID,REPORTID,PARAMNAME,PARAMKEY,DEFAULTVAL,PARAMTYPE,SN,PARAMTYPESTR)
+		VALUES
+		(#{PARAMID,jdbcType=NUMERIC}, #{REPORTID,jdbcType=NUMERIC}, #{PARAMNAME,jdbcType=VARCHAR}, #{PARAMKEY,jdbcType=VARCHAR}, #{DEFAULTVAL,jdbcType=VARCHAR}, #{PARAMTYPE,jdbcType=VARCHAR}, #{SN,jdbcType=NUMERIC}, #{PARAMTYPESTR,jdbcType=VARCHAR})
+	</insert>
+	
+	<delete id="delById" parameterType="java.lang.Long">
+		DELETE FROM SYS_REPORT_PARAM 
+		WHERE
+		PARAMID=#{PARAMID}
+	</delete>
+	
+	<update id="update" parameterType="com.hotent.platform.model.system.ReportParam">
+		UPDATE SYS_REPORT_PARAM SET
+		REPORTID=#{REPORTID,jdbcType=NUMERIC} , 
+		PARAMNAME=#{PARAMNAME,jdbcType=VARCHAR} , 
+		PARAMKEY=#{PARAMKEY,jdbcType=VARCHAR} , 
+		DEFAULTVAL=#{DEFAULTVAL,jdbcType=VARCHAR} , 
+		PARAMTYPE=#{PARAMTYPE,jdbcType=VARCHAR} , 
+		SN=#{SN,jdbcType=NUMERIC} , 
+		PARAMTYPESTR=#{PARAMTYPESTR,jdbcType=VARCHAR} 
+		WHERE
+		PARAMID=#{PARAMID}
+	</update>
+	
+	<select id="getById" parameterType="java.lang.Long" resultMap="ReportParam">
+		SELECT <include refid="columns"/>
+		FROM SYS_REPORT_PARAM
+		WHERE
+		PARAMID=#{PARAMID}
+	</select>
+	
+	<select id="getAll" resultMap="ReportParam">
+		SELECT <include refid="columns"/>
+		FROM SYS_REPORT_PARAM   
+		<include refid="dynamicWhere" />
+		<if test="@Ognl@isNotEmpty(orderField)">
+		order by ${orderField} ${orderSeq}
+		</if>
+		<if test="@Ognl@isEmpty(orderField)">
+		order by PARAMID  desc
+		</if>
+	</select>
+</mapper>

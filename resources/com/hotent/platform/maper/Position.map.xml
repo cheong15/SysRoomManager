@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.hotent.platform.model.system.Position">
+	<resultMap id="Position" type="com.hotent.platform.model.system.Position">
+		<id property="posId" column="posId" jdbcType="NUMERIC"/>
+		<result property="posName" column="posName" jdbcType="VARCHAR"/>
+		<result property="posDesc" column="posDesc" jdbcType="VARCHAR"/>
+		<result property="parentId" column="parentId" jdbcType="NUMERIC"/>
+		<result property="nodePath" column="nodePath" jdbcType="VARCHAR"/>
+		<result property="depth" column="depth" jdbcType="NUMERIC"/>
+		<result property="sn" column="sn" jdbcType="NUMERIC"/>
+		<result property="isLeaf" column="isLeaf" jdbcType="NUMERIC"/>
+	</resultMap>
+	
+	<sql id="columns">
+		posId,posName,posDesc,parentId,nodePath,depth,sn,isLeaf
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<if test="@Ognl@isNotEmpty(posId)"> AND posId  =#{posId} </if>
+			<if test="@Ognl@isNotEmpty(posName)"> AND posName  LIKE #{posName}  </if>
+			<if test="@Ognl@isNotEmpty(posDesc)"> AND posDesc  LIKE #{posDesc}  </if>
+			<if test="@Ognl@isNotEmpty(nodePath)"> AND nodePath  LIKE '${nodePath}%' AND nodePath  != #{nodePath} </if>
+			<if test="@Ognl@isNotEmpty(depth)"> AND depth  =#{depth} </if>
+			<if test="@Ognl@isNotEmpty(sn)"> AND sn  =#{sn} </if>
+		</where>
+	</sql>
+
+	<insert id="add" parameterType="com.hotent.platform.model.system.Position">
+		INSERT INTO sys_position
+		(<include refid="columns"/>)
+		VALUES
+		(#{posId,jdbcType=NUMERIC}, #{posName,jdbcType=VARCHAR}, #{posDesc,jdbcType=VARCHAR}, #{parentId,jdbcType=NUMERIC}, #{nodePath,jdbcType=VARCHAR}, #{depth,jdbcType=NUMERIC}, #{sn,jdbcType=NUMERIC}, #{isLeaf,jdbcType=NUMERIC})
+	</insert>
+	
+	<delete id="delById" parameterType="java.lang.Long">
+		DELETE FROM SYS_POSITION 
+		WHERE
+		posId=#{posId}
+	</delete>
+	
+	<update id="update" parameterType="com.hotent.platform.model.system.Position">
+		UPDATE sys_position SET
+		posName=#{posName,jdbcType=VARCHAR} , 
+		posDesc=#{posDesc,jdbcType=VARCHAR} , 
+		parentId=#{parentId,jdbcType=NUMERIC} , 
+		nodePath=#{nodePath,jdbcType=VARCHAR} , 
+		depth=#{depth,jdbcType=NUMERIC} , 
+		sn=#{sn,jdbcType=NUMERIC} , 
+		isLeaf=#{isLeaf,jdbcType=NUMERIC} 
+		WHERE
+		posId=#{posId}
+	</update>
+	
+	<update id="updSn" parameterType="Map">
+		UPDATE sys_position SET sn=#{sn,jdbcType=NUMERIC} WHERE  posId=#{posId}
+	</update>
+	
+	<select id="getById" parameterType="java.lang.Long" resultMap="Position">
+		SELECT <include refid="columns"/>
+		FROM SYS_POSITION
+		WHERE
+		posId=#{posId}
+	</select>
+	
+	<select id="getAll" resultMap="Position" parameterType="java.util.Map">
+		SELECT <include refid="columns"/>
+		FROM SYS_POSITION   
+		<include refid="dynamicWhere" />
+		<if test="@Ognl@isNotEmpty(orderField)">
+		order by ${orderField} ${orderSeq}
+		</if>
+		<if test="@Ognl@isEmpty(orderField)">
+		order by sn
+		</if>
+	</select>
+	
+	
+	<select id="getByParentId" parameterType="java.lang.Long" resultMap="Position">
+		SELECT <include refid="columns"/>
+		FROM SYS_POSITION
+		WHERE
+		parentId=#{parentId}
+		order by sn
+	</select>
+	
+	<select id="getByPosName" resultMap="Position" parameterType="java.util.Map">
+        SELECT
+       <include refid="columns"/>
+        FROM SYS_POSITION
+        WHERE posName = #{posName}
+    </select>
+	
+	<select id="getChildCountByParentId" parameterType="java.lang.Long" resultType="java.lang.Integer" >
+		SELECT  COUNT(1)
+		FROM SYS_POSITION
+		WHERE
+		parentId=#{parentId}
+	</select>
+	
+	<select id="getByUserId" parameterType="java.lang.Long"  resultType="com.hotent.platform.model.system.Position">
+	  SELECT o.*,uo.isPrimary FROM SYS_POSITION o join  SYS_USER_POS uo 
+	  on o.posid = uo.posId 
+	  where uo.userId=#{userId}
+	</select>
+	
+	<select id="getPosByUserId" parameterType="java.lang.Long"  resultType="com.hotent.platform.model.system.Position">
+	  SELECT p.* FROM SYS_POSITION p join  SYS_USER_POS uo 
+	  on p.posid = uo.posId 
+	  where uo.userId=#{userId} and uo.isprimary=1
+	</select>
+	
+
+</mapper>

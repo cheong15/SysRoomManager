@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.hotent.platform.model.bpm.ProBusLink">
+	<resultMap id="ProBusLink" type="com.hotent.platform.model.bpm.ProBusLink">
+		<id property="id" column="ID" jdbcType="NUMERIC"/>
+		<result property="tableName" column="TABLE_NAME" jdbcType="VARCHAR"/>
+		<result property="pkField" column="PK_FIELD" jdbcType="VARCHAR"/>
+		<result property="pkVal" column="PK_VAL" jdbcType="VARCHAR"/>
+		<result property="createtime" column="CREATETIME" jdbcType="TIMESTAMP"/>
+		<result property="runId" column="RUN_ID" jdbcType="NUMERIC"/>
+		<result property="actInstId" column="ACT_INST_ID" jdbcType="NUMERIC"/>
+		<result property="defId" column="DEF_ID" jdbcType="NUMERIC"/>
+		<result property="actDefId" column="ACT_DEF_ID" jdbcType="VARCHAR"/>
+		<result property="userId" column="USER_ID" jdbcType="NUMERIC"/>
+		<result property="orgId" column="ORG_ID" jdbcType="NUMERIC"/>
+	</resultMap>
+
+	<sql id="columns">
+		ID,TABLE_NAME,PK_FIELD,PK_VAL,CREATETIME,RUN_ID,ACT_INST_ID,DEF_ID,ACT_DEF_ID,USER_ID,ORG_ID
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+			<if test="@Ognl@isNotEmpty(id)"> AND ID  =#{id} </if>
+			<if test="@Ognl@isNotEmpty(tableName)"> AND TABLE_NAME  LIKE #{tableName}  </if>
+			<if test="@Ognl@isNotEmpty(pkField)"> AND PK_FIELD  LIKE #{pkField}  </if>
+			<if test="@Ognl@isNotEmpty(pkVal)"> AND PK_VAL  LIKE #{pkVal}  </if>
+			<if test="@Ognl@isNotEmpty(createtime)"> AND CREATETIME  LIKE #{createtime}  </if>
+			<if test="@Ognl@isNotEmpty(runId)"> AND RUN_ID  =#{runId} </if>
+			<if test="@Ognl@isNotEmpty(actInstId)"> AND ACT_INST_ID  =#{actInstId} </if>
+			<if test="@Ognl@isNotEmpty(defId)"> AND DEF_ID  =#{defId} </if>
+			<if test="@Ognl@isNotEmpty(actDefId)"> AND ACT_DEF_ID  LIKE #{actDefId}  </if>
+			<if test="@Ognl@isNotEmpty(userId)"> AND USER_ID  =#{userId} </if>
+			<if test="@Ognl@isNotEmpty(orgId)"> AND ORG_ID  =#{orgId} </if>
+		</where>
+	</sql>
+
+	<insert id="add" parameterType="com.hotent.platform.model.bpm.ProBusLink">
+		INSERT INTO BPM_PRO_BUS_LINK
+		(ID,TABLE_NAME,PK_FIELD,PK_VAL,CREATETIME,RUN_ID,ACT_INST_ID,DEF_ID,ACT_DEF_ID,USER_ID,ORG_ID)
+		VALUES
+		(#{id,jdbcType=NUMERIC}, #{tableName,jdbcType=VARCHAR}, #{pkField,jdbcType=VARCHAR}, #{pkVal,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, #{runId,jdbcType=NUMERIC}, #{actInstId,jdbcType=NUMERIC}, #{defId,jdbcType=NUMERIC}, #{actDefId,jdbcType=VARCHAR}, #{userId,jdbcType=NUMERIC}, #{orgId,jdbcType=NUMERIC})
+	</insert>
+	
+	<delete id="delById" parameterType="java.lang.Long">
+		DELETE FROM BPM_PRO_BUS_LINK 
+		WHERE
+		ID=#{id}
+	</delete>
+	
+	<update id="update" parameterType="com.hotent.platform.model.bpm.ProBusLink">
+		UPDATE BPM_PRO_BUS_LINK SET
+		TABLE_NAME=#{tableName,jdbcType=VARCHAR},
+		PK_FIELD=#{pkField,jdbcType=VARCHAR},
+		PK_VAL=#{pkVal,jdbcType=VARCHAR},
+		CREATETIME=#{createtime,jdbcType=TIMESTAMP},
+		RUN_ID=#{runId,jdbcType=NUMERIC},
+		ACT_INST_ID=#{actInstId,jdbcType=NUMERIC},
+		DEF_ID=#{defId,jdbcType=NUMERIC},
+		ACT_DEF_ID=#{actDefId,jdbcType=VARCHAR},
+		USER_ID=#{userId,jdbcType=NUMERIC},
+		ORG_ID=#{orgId,jdbcType=NUMERIC}
+		WHERE
+		ID=#{id}
+	</update>
+		    
+	<select id="getById" parameterType="java.lang.Long" resultMap="ProBusLink">
+		SELECT <include refid="columns"/>
+		FROM BPM_PRO_BUS_LINK
+		WHERE
+		ID=#{id}
+	</select>
+	
+	<select id="getAll" resultMap="ProBusLink">
+		SELECT <include refid="columns"/>
+		FROM BPM_PRO_BUS_LINK   
+		<include refid="dynamicWhere" />
+		<if test="@Ognl@isNotEmpty(orderField)">
+		order by ${orderField} ${orderSeq}
+		</if>
+		<if test="@Ognl@isEmpty(orderField)">
+		order by ID  desc
+		</if>
+	</select>
+</mapper>

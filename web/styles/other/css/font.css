@@ -1,0 +1,30 @@
+/*Common*/
+.yellow{
+	color:#f60;
+}
+.bigFont{
+	font-weight:bold;
+}
+.grayFont{
+	color:#8D8D8D;
+}
+a:link{
+	color:#5d5d5d;text-decoration:none;
+}
+a:visited{
+	text-decoration:underline;color:#999;
+}
+a:hover,a:active{
+	color:#f36100;text-decoration:underline;
+}
+
+/*TopNav*/
+.topNav{
+	color:#ccc;
+}
+.topNav a:link,.topNav a:visited{
+	color:#ccc;text-decoration:none;
+}
+.topNav a:hover,.topNav a:active{
+	color:#fc3;text-decoration:none;border-bottom:1px #fc3 dotted;
+}

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"  
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	 xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:p="http://www.springframework.org/schema/p"  
+	xmlns:context="http://www.springframework.org/schema/context"  
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd  
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+	http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd"
+	default-autowire="byName" default-lazy-init="false">
+	
+	<aop:aspectj-autoproxy proxy-target-class="true"/>
+	<!-- SpringMVC相关Bean配置 -->
+	<context:component-scan base-package="com.hotent.*.controller" />
+	<context:component-scan base-package="net.gmcc.*.controller" />
+	<context:component-scan base-package="net.gmcc.gz.base.json.**" />
+	<context:component-scan base-package="main.java.com.hotent.W_SM_SEAL.controller" />
+	
+	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping" />
+	
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter" >
+		<property name="messageConverters">
+			<list>
+				<bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="redirectHttp10Compatible" value="false"/>
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+		<property name="contentType" value="text/html;charset=UTF-8" />
+		<property name="prefix" value="/WEB-INF/view/" />
+		<property name="suffix" value="" />
+	</bean>
+
+	<bean id="multipartResolver" class="com.hotent.core.web.CustomerMultipartResolver">
+		<!-- 设置上传文件的最大尺寸为100MB -->
+		<property name="maxUploadSize">
+			<value>104857600</value>
+		</property>
+		<property name="defaultEncoding" value="utf-8"/>
+	</bean>
+
+	<mvc:annotation-driven />
+
+</beans> 

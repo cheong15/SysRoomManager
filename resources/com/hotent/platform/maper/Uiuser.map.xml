@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.hotent.demo.model.LigerUI.Uiuser">
+	<resultMap id="Uiuser" type="com.hotent.demo.model.LigerUI.Uiuser">
+		<id property="id" column="ID" jdbcType="NUMERIC"/>
+		<result property="UIname" column="F_UINAME" jdbcType="VARCHAR"/>
+		<result property="password" column="F_PASSWORD" jdbcType="VARCHAR"/>
+		<result property="age" column="F_AGE" jdbcType="VARCHAR"/>
+		<result property="birthday" column="F_BIRTHDAY" jdbcType="DATE"/>
+		<result property="salary" column="F_SALARY" jdbcType="NUMERIC"/>
+		<result property="isInPart" column="F_ISINPART" jdbcType="VARCHAR"/>
+		<result property="comment" column="F_COMMENT" jdbcType="CLOB"/>
+		<result property="homeAddress" column="F_HOMEADDRESS" jdbcType="VARCHAR"/>
+		<result property="department" column="F_DEPARTMENT" jdbcType="VARCHAR"/>
+		<result property="joinDate" column="F_JOINDATE" jdbcType="DATE"/>
+	</resultMap>
+	
+	<sql id="columns">
+		ID,F_UINAME,F_PASSWORD,F_AGE,F_BIRTHDAY,F_SALARY,F_ISINPART,F_COMMENT,F_HOMEADDRESS,F_DEPARTMENT,F_JOINDATE
+	</sql>
+	
+	<sql id="dynamicWhere">
+		<where>
+				<if test="@Ognl@isNotEmpty(UIname)"> AND F_UINAME  LIKE '%${UIname}%'  </if>
+				<if test="@Ognl@isNotEmpty(password)"> AND F_PASSWORD  LIKE '%${password}%'  </if>
+				<if test="@Ognl@isNotEmpty(age)"> AND F_AGE  LIKE '%${age}%'  </if>
+				<if test="@Ognl@isNotEmpty(birthday)"> AND F_BIRTHDAY  =#{birthday} </if>
+				<if test="@Ognl@isNotEmpty(beginbirthday)"> AND F_BIRTHDAY  >=#{beginbirthday,jdbcType=DATE} </if>
+				<if test="@Ognl@isNotEmpty(endbirthday)"> AND F_BIRTHDAY <![CDATA[ <=#{endbirthday,jdbcType=DATE}]]> </if>
+				<if test="@Ognl@isNotEmpty(salary)"> AND F_SALARY  =#{salary} </if>
+				<if test="@Ognl@isNotEmpty(isInPart)"> AND F_ISINPART  LIKE '%${isInPart}%'  </if>
+				<if test="@Ognl@isNotEmpty(comment)"> AND F_COMMENT  =#{comment} </if>
+				<if test="@Ognl@isNotEmpty(homeAddress)"> AND F_HOMEADDRESS  LIKE '%${homeAddress}%'  </if>
+				<if test="@Ognl@isNotEmpty(department)"> AND F_DEPARTMENT  LIKE '%${department}%'  </if>
+				<if test="@Ognl@isNotEmpty(joinDate)"> AND F_JOINDATE  =#{joinDate} </if>
+				<if test="@Ognl@isNotEmpty(beginjoinDate)"> AND F_JOINDATE  >=#{beginjoinDate,jdbcType=DATE} </if>
+				<if test="@Ognl@isNotEmpty(endjoinDate)"> AND F_JOINDATE <![CDATA[ <=#{endjoinDate,jdbcType=DATE}]]> </if>
+		</where>
+	</sql>
+
+	<insert id="add" parameterType="com.hotent.demo.model.LigerUI.Uiuser">
+		INSERT INTO W_UIUSER
+			(ID,
+			F_UINAME,F_PASSWORD,F_AGE,F_BIRTHDAY,F_SALARY,F_ISINPART,F_COMMENT,F_HOMEADDRESS,F_DEPARTMENT,F_JOINDATE)
+			VALUES
+			(#{id,jdbcType=NUMERIC},
+			#{UIname,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{age,jdbcType=VARCHAR}, #{birthday,jdbcType=DATE}, #{salary,jdbcType=NUMERIC}, #{isInPart,jdbcType=VARCHAR}, #{comment,jdbcType=CLOB}, #{homeAddress,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, #{joinDate,jdbcType=DATE})
+	</insert>
+	
+	<delete id="delById" parameterType="java.lang.Long">
+		DELETE FROM W_UIUSER 
+		WHERE
+		ID=#{id}
+	</delete>
+	
+	<update id="update" parameterType="com.hotent.demo.model.LigerUI.Uiuser">
+		UPDATE W_UIUSER SET
+		F_UINAME=#{UIname,jdbcType=VARCHAR},
+		F_PASSWORD=#{password,jdbcType=VARCHAR},
+		F_AGE=#{age,jdbcType=VARCHAR},
+		F_BIRTHDAY=#{birthday,jdbcType=DATE},
+		F_SALARY=#{salary,jdbcType=NUMERIC},
+		F_ISINPART=#{isInPart,jdbcType=VARCHAR},
+		F_COMMENT=#{comment,jdbcType=CLOB},
+		F_HOMEADDRESS=#{homeAddress,jdbcType=VARCHAR},
+		F_DEPARTMENT=#{department,jdbcType=VARCHAR},
+		F_JOINDATE=#{joinDate,jdbcType=DATE}
+		WHERE
+		ID=#{id}
+	</update>
+	
+		    
+	<select id="getById" parameterType="java.lang.Long" resultMap="Uiuser">
+		SELECT <include refid="columns"/>
+		FROM W_UIUSER
+		WHERE
+		ID=#{id}
+	</select>
+	
+	<select id="getAll" resultMap="Uiuser">
+		SELECT <include refid="columns"/>
+		FROM W_UIUSER   
+		<include refid="dynamicWhere" />
+		<if test="@Ognl@isNotEmpty(orderField)">
+		order by ${orderField} ${orderSeq}
+		</if>
+		<if test="@Ognl@isEmpty(orderField)">
+		order by ID  desc
+		</if>
+	</select>
+	
+	<sql id="dynamicWhereJoin">
+		<where>
+				<if test="@Ognl@isNotEmpty(UIname)"> AND a.F_UINAME  LIKE '%${UIname}%'  </if>
+				<if test="@Ognl@isNotEmpty(password)"> AND a.F_PASSWORD  LIKE '%${password}%'  </if>
+				
+				<if test="@Ognl@isNotEmpty(selectUser)"> AND b.f_selectUser  LIKE '%${selectUser}%'  </if>
+				<if test="@Ognl@isNotEmpty(beginjiehunday)"> AND b.f_jiehunDay  >=#{beginjiehunday,jdbcType=DATE} </if>
+				<if test="@Ognl@isNotEmpty(endjiehunday)"> AND b.f_jiehunDay <![CDATA[ <=#{endjiehunday,jdbcType=DATE}]]> </if>
+				
+				<if test="@Ognl@isNotEmpty(toWife)"> AND c.f_toWife  = #{toWife} </if>
+				<if test="@Ognl@isNotEmpty(beginbirthday)"> AND c.f_birthday  >=#{beginbirthday,jdbcType=DATE} </if>
+				<if test="@Ognl@isNotEmpty(endbirthday)"> AND c.f_birthday <![CDATA[ <=#{endbirthday,jdbcType=DATE}]]> </if>
+		</where>
+	</sql>
+	<select id="getListJoinLgeditors"  resultType="HashMap">
+		select a.f_UIname,a.f_password  password,b.f_selectUser,b.f_jiehunDay   jiehunDay,c.f_toWife   toWife,c.f_birthday from w_uiuser a,W_LGEDITORS  c,W_LGMORE  b
+  	    <include refid="dynamicWhereJoin" />
+		<if test="@Ognl@isNotEmpty(orderField)">
+		order by ${orderField} ${orderSeq}
+		</if>
+		<if test="@Ognl@isEmpty(orderField)">
+		order by a.ID  desc
+		</if>
+	</select>
+</mapper>
